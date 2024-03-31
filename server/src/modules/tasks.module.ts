@@ -8,5 +8,6 @@ import { Task } from '../models/task.model'; // Убедитесь, что пу�
   imports: [TypeOrmModule.forFeature([Task])],
   controllers: [TasksController],
   providers: [TasksService],
+  exports: [TypeOrmModule],
 })
 export class TasksModule {}

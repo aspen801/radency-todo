@@ -19,6 +19,12 @@ export class TaskListsController {
     return this.taskListsService.getAll();
   }
 
+  @Get(':id/tasks/count')
+  async getTasksCount(@Param('id') listId: number): Promise<{ count: number }> {
+    const count = await this.taskListsService.getTasksCount(listId);
+    return { count };
+  }
+
   @Post('/create')
   async createTaskList(@Body() taskList: TaskList): Promise<TaskList> {
     return this.taskListsService.create(taskList);
