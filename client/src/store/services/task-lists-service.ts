@@ -35,8 +35,8 @@ export const taskListsApi = createApi({
       }),
       invalidatesTags: [{ type: "TaskLists", id: "LISTS" }],
     }),
-    changeTaskList: build.mutation({
-      query: ({ taskListId, body }) => ({
+    updateTaskList: build.mutation({
+      query: ({ taskListId, ...body }) => ({
         url: `/update/${taskListId}`,
         method: "PATCH",
         body,
@@ -50,4 +50,5 @@ export const {
   useGetAllTaskListsQuery,
   useCreateTaskListMutation,
   useDeleteTaskListMutation,
+  useUpdateTaskListMutation,
 } = taskListsApi;

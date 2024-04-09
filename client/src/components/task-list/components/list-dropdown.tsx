@@ -9,9 +9,11 @@ import { Pencil, Trash2, Plus } from "lucide-react";
 import IconButton from "../../icon-button/icon-button";
 
 const ListDropdown = ({
+  setIsEditModalOpen,
   deleteTaskList,
   taskListId,
 }: {
+  setIsEditModalOpen: Function;
   deleteTaskList: Function;
   taskListId: number;
 }) => {
@@ -27,7 +29,7 @@ const ListDropdown = ({
         <IconButton />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setIsEditModalOpen(true)}>
           <Pencil className="mr-2 h-4 w-4" />
           <span>Edit</span>
         </DropdownMenuItem>
