@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TasksService } from './tasks.service';
 import { Repository } from 'typeorm';
 import { TaskList } from '../models/task-list.model';
 import { Task } from '../models/task.model';
@@ -12,6 +13,8 @@ export class TaskListsService {
 
     @InjectRepository(Task)
     private taskRepository: Repository<Task>,
+
+    private readonly taskService: TasksService,
   ) {}
 
   async getAll(): Promise<TaskList[]> {
@@ -44,6 +47,13 @@ export class TaskListsService {
   }
 
   async delete(id: number): Promise<void> {
+    const existingTaskList = await this.taskListRepository.findOneBy({ id });
+    if (!existingTaskList) {
+      throw new NotFoundException(`TaskList with ID ${id} not found.`);
+    }
+
+    await this.taskService.deleteTasksByListId(id);
+
     const result = await this.taskListRepository.delete(id);
     if (result.affected === 0) {
       throw new NotFoundException(`TaskList with ID ${id} not found.`);

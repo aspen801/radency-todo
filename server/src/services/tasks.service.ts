@@ -41,6 +41,10 @@ export class TasksService {
     }
   }
 
+  async deleteTasksByListId(listId: number): Promise<void> {
+    await this.taskRepository.delete({ list_id: listId });
+  }
+
   async move(taskId: number, newListId: number): Promise<Task> {
     const task = await this.taskRepository.findOneBy({ id: taskId });
     if (!task) {
